@@ -2,6 +2,7 @@ import pool from '../lib/utils/pool.js';
 import setup from '../data/setup.js';
 import request from 'supertest';
 import app from '../lib/app.js';
+import getDogFact from '../lib/utils/dogAPI.js';
 
 describe('demo routes', () => {
   beforeEach(() => {
@@ -10,15 +11,19 @@ describe('demo routes', () => {
   beforeEach(() => {
     return request(app)
       .post('/api/resources/dogs')
-      .send({ breed: 'Pug', dogname: 'Coco' });
+      .send({ breed: 'Pug', dogname: 'Coco', fact: 'Pugs are very friendly' });
   });
-  it('posts a new dog into the database and retrieves a dog fact', () => {
+  it('posts a new dog into the database and retrieves a dog fact', async () => {
+    const fact = await getDogFact();
     return request(app)
       .post('/api/resources/dogs')
-      .send({ breed: 'Golden-retriever', dogname: 'Oaklee' })
+      .send({ breed: 'Golden-retriever', dogname: 'Oaklee', fact })
       .then(response => {
-        console.log(response.body);
-        expect(response.body).toEqual({ id: 2, breed: 'Golden-retriever', dogname: 'Oaklee' });
+        expect(response.body.id).toEqual(2);
+        expect(response.body.breed).toEqual('Golden-retriever');
+        expect(response.body.dogname).toEqual('Oaklee');
+        expect(typeof(response.body.fact)).toBe('string');
+  
       });
   });
 
