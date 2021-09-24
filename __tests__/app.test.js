@@ -54,6 +54,20 @@ describe('demo routes', () => {
       });
   });
 
+  it('updates a dog based on the id that the PUT /:id route is called to', async () => {
+    await request(app)
+      .post('/api/resources/dogs')
+      .send({ breed: 'Labrador', dogname: 'Goose' });
+    return request(app)
+      .put('/api/resources/dogs/2')
+      .send({ id: 2, breed: 'Labrador-Retriever', dogname: 'Goose' })
+      .then(response => {
+        expect(response.body.id).toEqual(2);
+        expect(response.body.breed).toEqual('Labrador-Retriever');
+        expect(response.body.dogname).toEqual('Goose');
+      });
+  });
+
   afterAll(() => {
     pool.end();
   });
