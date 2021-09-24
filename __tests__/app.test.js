@@ -46,9 +46,11 @@ describe('demo routes', () => {
       .post('/api/resources/dogs')
       .send({ breed: 'Labrador', dogname: 'Goose' });
     return request(app)
-      .get('/api/resources/dogs')
+      .get('/api/resources/dogs/2')
       .then(response => {
-        expect(response.body).toEqual({ id: 2, breed: 'Labrador', dogname: 'Goose' })
+        expect(response.body.id).toEqual(2);
+        expect(response.body.breed).toEqual('Labrador');
+        expect(response.body.dogname).toEqual('Goose');
       });
   });
 
