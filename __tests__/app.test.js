@@ -75,7 +75,10 @@ describe('demo routes', () => {
     return request(app)
       .delete('/api/resources/dogs/1')
       .then(response => {
-        expect(response.body).toEqual({ breed: 'Pug', dogname: 'Coco', fact: 'Pugs are very friendly' });
+        expect(response.body.id).toEqual(1);
+        expect(response.body.breed).toEqual('Pug');
+        expect(response.body.dogname).toEqual('Coco');
+      
       });
   });
 
