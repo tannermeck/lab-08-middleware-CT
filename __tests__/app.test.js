@@ -21,7 +21,6 @@ describe('demo routes', () => {
         expect(response.body.breed).toEqual('Golden-retriever');
         expect(response.body.dogname).toEqual('Oaklee');
         expect(typeof(response.body.fact)).toBe('string');
-  
       });
   });
   
@@ -35,9 +34,11 @@ describe('demo routes', () => {
         const dogId = response.body.map(dog => dog.id);
         const dog = response.body.map(dog => dog.breed);
         const dogname = response.body.map(dog => dog.dogname);
+        const [dogfact] = response.body.map(dog => dog.fact);
         expect(dogId).toEqual([1, 2]);
         expect(dog).toEqual(['Pug', 'Labrador']);
         expect(dogname).toEqual(['Coco', 'Goose']);
+        expect(typeof(dogfact)).toBe('string');
       });
   });
 
@@ -51,6 +52,7 @@ describe('demo routes', () => {
         expect(response.body.id).toEqual(2);
         expect(response.body.breed).toEqual('Labrador');
         expect(response.body.dogname).toEqual('Goose');
+        expect(typeof(response.body.fact)).toBe('string');
       });
   });
 
@@ -65,6 +67,7 @@ describe('demo routes', () => {
         expect(response.body.id).toEqual(2);
         expect(response.body.breed).toEqual('Labrador-Retriever');
         expect(response.body.dogname).toEqual('Goose');
+        expect(typeof(response.body.fact)).toBe('string');
       });
   });
 
@@ -78,7 +81,7 @@ describe('demo routes', () => {
         expect(response.body.id).toEqual(1);
         expect(response.body.breed).toEqual('Pug');
         expect(response.body.dogname).toEqual('Coco');
-      
+        expect(typeof(response.body.fact)).toBe('string');
       });
   });
 
