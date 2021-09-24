@@ -41,6 +41,17 @@ describe('demo routes', () => {
       });
   });
 
+  it('returns a dog by the id when GET /:id route is called', async () => {
+    await request(app)
+      .post('/api/resources/dogs')
+      .send({ breed: 'Labrador', dogname: 'Goose' });
+    return request(app)
+      .get('/api/resources/dogs')
+      .then(response => {
+        expect(response.body).toEqual({ id: 2, breed: 'Labrador', dogname: 'Goose' })
+      });
+  });
+
   afterAll(() => {
     pool.end();
   });
