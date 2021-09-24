@@ -57,14 +57,25 @@ describe('demo routes', () => {
   it('updates a dog based on the id that the PUT /:id route is called to', async () => {
     await request(app)
       .post('/api/resources/dogs')
-      .send({ breed: 'Labrador', dogname: 'Goose' });
+      .send({ breed: 'Labrador', dogname: 'goose', fact: 'goose loves treats' });
     return request(app)
       .put('/api/resources/dogs/2')
-      .send({ id: 2, breed: 'Labrador-Retriever', dogname: 'Goose' })
+      .send({ id: 2, breed: 'Labrador-Retriever', dogname: 'Goose', fact: 'goose loves treats' })
       .then(response => {
         expect(response.body.id).toEqual(2);
         expect(response.body.breed).toEqual('Labrador-Retriever');
         expect(response.body.dogname).toEqual('Goose');
+      });
+  });
+
+  it('deletes a dog based on the id that the DELETE /:id route is called to', async () => {
+    await request(app)
+      .post('/api/resources/dogs')
+      .send({ breed: 'Labrador', dogname: 'goose', fact: 'goose loves treats' });
+    return request(app)
+      .delete('/api/resources/dogs/1')
+      .then(response => {
+        expect(response.body).toEqual({ breed: 'Pug', dogname: 'Coco', fact: 'Pugs are very friendly' });
       });
   });
 
